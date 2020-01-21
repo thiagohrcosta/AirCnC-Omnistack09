@@ -1,0 +1,10 @@
+{
+  "name": "OmniStack09",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Thiago H.R. Costa <thiago_henrique86@hotmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}

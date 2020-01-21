@@ -4,6 +4,11 @@ const routes = require('./routes');
 
 const app = express();
 
+mongoose.connect('mongodb+srv://omnistack:omnistack@omni09-z0kfu.mongodb.net/semana09?retryWrites=true&w=majority', {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+})
+
 // =============================================================
 // GET: método utilizado para buscar informação do backend
 // POST: quando se quer criar nova informação no backend

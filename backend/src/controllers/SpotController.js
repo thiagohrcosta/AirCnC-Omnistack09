@@ -3,7 +3,7 @@ const Spot = require('../models/Spot');
 
 module.exports = {
 
-    async index(req, res){
+    async index(req, res) {
         const { tech } = req.query;
 
         const spots = await Spot.find({ techs: tech });
@@ -16,18 +16,18 @@ module.exports = {
         const { company, techs, price } = req.body;
         const { user_id } = req.headers;
 
-        const user = await user.findById(user_id);
+        const user = await User.findById(user_id);
 
-        if (!user){
-            return res.status(400).json({ error: 'User does not exist' });
+        if (!user) {
+            return res.status(400).json({ error: "Usuário inexistente" })
         }
 
         const spot = await Spot.create({
             user: user_id,
-            thumbnail: filename,
+            thumbnail: filename ,
             company,
-            price,
-            techs: techs.split(',').map(tech => tech.trim())
+            techs: techs.split(',').map(tech => tech.trim()),
+            price
         })
 
         return res.json(spot)

@@ -12,24 +12,25 @@ const app = express();
 const server = http.Server(app);
 const io = socketio(server);
 
+
 mongoose.connect('mongodb+srv://omnistack:omnistack@omni09-z0kfu.mongodb.net/semana09?retryWrites=true&w=majority', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
 })
 
-const connectUsers = {};
+const connectedUsers = {};
 
 io.on('connection', socket => {
-    const { user_id } = socket.handshake.query;
+  const { user_id } = socket.handshake.query;
 
-    connectedUsers[user_id] = socket.id;
+  connectedUsers[user_id] = socket.id;
 });
 
 app.use((req, res, next) => {
-    req.io = io;
-    req.connectedUsers = connectedUsers;
+  req.io = io;
+  req.connectedUsers = connectedUsers;
 
-    return next();
+  return next();
 })
 
 // =============================================================

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, Alert, StyleSheet, TextInput, AsyncStorage, Text, TouchableOpacity, Platform } from 'react-native';
 
-import api from '../services/api';
+import api from '../services/api'
 
 export default function Book({ navigation }) {
     const [date, setDate] = useState('');
@@ -22,10 +22,10 @@ export default function Book({ navigation }) {
     }
 
     function handleCancel() {
-        navigation.navigate('List');
+        navigation.navigate('List');    
+
     }
     
-
     return (
         <SafeAreaView style={styles.container}> 
             <Text style={styles.label}>DATA DE INTERESSE *</Text>
@@ -90,4 +90,3 @@ const styles = StyleSheet.create({
         marginTop: 10,
     },
 })
-

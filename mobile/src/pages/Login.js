@@ -1,11 +1,30 @@
-import React from 'react';
-import { View, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { View, AsyncStorage, KeyboardAvoidingView, Platform, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+
+import api from '../services/api';
+
 
 import logo from '../assets/logo.png';
 
-export default function Login(){
+export default function Login( { navigation }){
+    const [email, setEmail] = useState();
+    const [techs, setTechs] = useState();
+
+    async function handleSubmit(){
+        const response = await api.post('/sessions', {
+            email
+        })
+
+        const { _id } = response.data;
+
+        await AsyncStorage.setItem('user', _id);
+        await AsyncStorage.setItem('techs', techs);
+
+        navigation.navigate('List');
+        
+    }
     return ( 
-    <View style={styles.container}>
+    <KeyboardAvoidingView enable={Platform.OS === 'ios'} behavior="padding" style={styles.container}>
         <Image source={logo} />
 
         <View sytle={styles.form}>        
@@ -17,6 +36,8 @@ export default function Login(){
                 keyboardType="email-address"
                 autoCapitalize="none"
                 autoCorrect={false}
+                value={email}
+                onChangeText={setEmail}
             />
 
             <Text style={styles.label}>TECNOLOGIAS *</Text>
@@ -26,13 +47,15 @@ export default function Login(){
                 placeholderTextColor="#999"
                 autoCapitalize="words"
                 autoCorrect={false}
+                value={techs}
+                onChangeText={setTechs}
             />
 
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                     <Text style={styles.buttonText}>Encontrar spots</Text>
                 </TouchableOpacity>
         </View>
-    </View> 
+    </KeyboardAvoidingView> 
     );   
 }
 

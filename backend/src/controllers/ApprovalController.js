@@ -10,6 +10,12 @@ module.exports = {
 
         await booking.save();
 
+        const bookginUserSocket = requ.connectedUser[booking.user];
+
+        if (bookingUserSocket){
+            req.io.to(bookingUserSocket).emit('booking_request', booking);
+        }
+
         return res.json(booking);
 
         }

@@ -1,21 +1,19 @@
 import React, { useState } from 'react';
-import { SafeAreaView, Alert, StyleSheet, TextInput, AsyncStorage, Text, TouchableOpacity } from 'react-native';
+import { SafeAreaView, Alert, StyleSheet, TextInput, AsyncStorage, Text, TouchableOpacity, Platform } from 'react-native';
 
 import api from '../services/api';
 
-export default function Book( { navigation }){
+export default function Book({ navigation }) {
     const [date, setDate] = useState('');
     const id = navigation.getParam('id');
 
-    async function handleSubmit(){
+    async function handleSubmit() {
         const user_id = await AsyncStorage.getItem('user');
 
         await api.post(`/spots/${id}/bookings`, {
             date
         }, {
-            headers: {
-                user_id
-            }
+            headers: { user_id }
         })
 
         Alert.alert('Solicitação de reserva enviada.');
@@ -23,33 +21,32 @@ export default function Book( { navigation }){
         navigation.navigate('List');
     }
 
-    function handleCancel(){
+    function handleCancel() {
         navigation.navigate('List');
     }
     
 
-    return 
-    <SafeAreaView style={styles.container}>
-        <Text style={styles.label}>DATA DE INTERESSE *</Text>
+    return (
+        <SafeAreaView style={styles.container}> 
+            <Text style={styles.label}>DATA DE INTERESSE *</Text>
             <TextInput 
-                style={styles.input}
-                placeholder="Qual data você quer reservar?"
-                placeholderTextColor="#999"
-                keyboardType="email-address"
-                autoCapitalize="words"
-                autoCorrect={false}
-                value={techs}
-                onChangeText={setTechs}
-            />
+                style={styles.input} 
+                placeholder="Qual data você quer reservar?" 
+                placeholderTextColor="#999" 
+                autoCapitalize="words" 
+                autoCorrect={false} 
+                value={date} 
+                onChangeText={setDate} />
 
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>
                 <Text style={styles.buttonText}>Solicitar reserva</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={handleCancel} style={styles.button, styles.cancelButton}>
-                <Text style={styles.buttonText}>Cancelar reserva</Text>
+            <TouchableOpacity onPress={handleCancel} style={[styles.button, styles.cancelButton]}>
+                <Text style={styles.buttonText}>Cancelar</Text>
             </TouchableOpacity>
-    </SafeAreaView>
+        </SafeAreaView>
+    ) 
 }
 
 const styles = StyleSheet.create({
